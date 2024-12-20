@@ -27,6 +27,7 @@ app.config.from_object(Config)
 # ! BLUEPPRINTS GO HERE
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(post_routes, url_prefix='/api/posts')
+app.register_blueprint(amazon_routes, url_prefix='/api/amazon')
 
 Migrate(app, db)
 CORS(app)
