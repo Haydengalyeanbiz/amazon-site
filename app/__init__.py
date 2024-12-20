@@ -8,6 +8,7 @@ from .config import Config
 from .seeders import seed_commands
 from .api.auth_routes import auth_routes
 from .api.post_routes import post_routes
+from .api.amazon_routes import amazon_routes
 import os
 
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
