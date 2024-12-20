@@ -11,6 +11,11 @@ export default defineConfig((mode) => ({
 			failOnError: mode === 'production',
 		}),
 	],
+	resolve: {
+		alias: {
+			'@': '/src', // This assumes that your source files are in a directory named 'src' at the root of your project
+		},
+	},
 	server: {
 		open: true,
 		proxy: {

@@ -5,6 +5,8 @@ from flask_login import LoginManager
 from .models import db, User
 from .config import Config
 from .seeders import seed_commands
+from .api.auth_routes import auth_routes
+from .api.post_routes import post_routes
 
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
@@ -20,6 +22,8 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 
 # ! BLUEPPRINTS GO HERE
+app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(post_routes, url_prefix='/api/posts')
 
 Migrate(app, db)
 CORS(app)

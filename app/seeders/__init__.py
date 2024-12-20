@@ -1,6 +1,6 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
-from backend.models import db, environment, SCHEMA
+from app.models import db, environment, SCHEMA
 
 seed_commands = AppGroup('seed')
 
