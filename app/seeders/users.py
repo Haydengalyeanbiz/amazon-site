@@ -3,9 +3,12 @@ from sqlalchemy.sql import text
 
 def seed_users():
     mom = User(
-        username='indycouponmama', email='hbennen@yahoo.com',password='DealsMama5742!'
+        username="indycouponmama",
+        email="hbennen@yahoo.com",
+        password = "DealsMama5742!" 
     )
     db.session.add(mom)
+    db.session.commit()
 
 def undo_users():
     if environment == "production":

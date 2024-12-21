@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-psycopg2-binary = "==2.9.5"
 alembic = "==1.9.2"
 boto3 = "==1.26.89"
 click = "==8.1.3"

@@ -12,7 +12,7 @@ class Post(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     image_url = db.Column(db.String(300), nullable=False)
     link_url = db.Column(db.String(1000), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('user.id')), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     created_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
 

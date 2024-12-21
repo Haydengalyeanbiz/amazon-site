@@ -1,4 +1,4 @@
-from .db import db, SCHEMA, environment
+from .db import db, SCHEMA, environment, add_prefix_for_prod
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -11,9 +11,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False, unique=True)
     email = db.Column(db.String(120), nullable=False, unique=True)
-    password_hash = db.Column(db.String(128), nullable=False)
-
-    posts = db.relationship('Post', backref='author', lazy=True)
+    password = db.Column(db.String(128), nullable=False)
 
     @property
     def password(self):
