@@ -29,5 +29,6 @@ def create_app(*args, **kwargs):
     app.register_blueprint(amazon_routes, url_prefix='/api/amazon')
 
     app.cli.add_command(seed_commands)
+    print("Flask app created:", app)
 
     return app

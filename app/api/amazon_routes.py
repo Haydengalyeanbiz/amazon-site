@@ -1,11 +1,12 @@
+from flask import Blueprint, jsonify, request
+from flask_login import login_required
 from paapi5_python_sdk.api.default_api import DefaultApi
 from paapi5_python_sdk.models.get_items_request import GetItemsRequest
 from paapi5_python_sdk.models.get_items_resource import GetItemsResource
 from paapi5_python_sdk.models.partner_type import PartnerType
 from paapi5_python_sdk.rest import ApiException
 import os
-from flask import Blueprint, jsonify, request
-from flask_login import login_required
+
 
 ACCESS_KEY = os.getenv('AMAZON_ACCESS_KEY')
 SECRET_KEY = os.getenv('AMAZON_SECRET_KEY')
