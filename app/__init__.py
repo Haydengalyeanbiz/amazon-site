@@ -1,13 +1,14 @@
 from flask import Flask, request, redirect
 from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_cors import CORS
 from flask_login import LoginManager
-from .models import db, User
 from .config import Config
 from .seeders import seed_commands
 import os
 
+db = SQLAlchemy()
 migrate = Migrate()
 
 def create_app(*args, **kwargs):
