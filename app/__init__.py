@@ -10,7 +10,8 @@ import os
 
 migrate = Migrate()
 
-def create_app():
+def create_app(*args, **kwargs):
+    print(*args, **kwargs)
     app = Flask(__name__)
 
     app.config.from_object('app.config.Config')
