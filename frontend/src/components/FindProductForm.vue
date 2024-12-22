@@ -149,7 +149,7 @@ export default {
 			}
 
 			try {
-				const response = await axios.post('/fetch-product-details', {
+				const response = await axios.post('/amazon/fetch-product-details', {
 					asin,
 				});
 				this.product = response.data;

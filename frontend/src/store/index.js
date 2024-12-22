@@ -66,7 +66,7 @@ const store = createStore({
 		// ! GET ALL POSTS
 		async fetchPosts({ commit }) {
 			try {
-				const response = await axios.get('/posts');
+				const response = await axios.get('/all-posts');
 				commit('setPosts', response.data);
 			} catch (error) {
 				console.error('Failed to fetch posts:', error);

@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from app.models import Post
 from app.forms import PostForm
 from flask_login import login_required
@@ -9,4 +9,4 @@ post_routes = Blueprint('post', __name__)
 def get_posts():
     posts = Post.query.order_by(Post.created_date.desc()).all()
     result = [post.to_dict() for post in posts]
-    return result
+    return jsonify(result), 200
