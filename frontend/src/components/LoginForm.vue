@@ -64,14 +64,12 @@ export default {
 				this.error = null;
 
 				const credentials = { email: this.email, password: this.password };
-				console.log('Credentials:', credentials); // Log credentials
+				console.log('Credentials:', credentials);
 
-				// Call the Vuex login action
-				await this.login(credentials); // Calls the Vuex action, not this method recursively
+				await this.login(credentials);
 				console.log('Login successful');
 				console.log('Vuex state after login:', this.$store.state);
 
-				// Redirect to home page after successful login
 				this.$router.push('/');
 			} catch (error) {
 				console.error('Login failed:', error);

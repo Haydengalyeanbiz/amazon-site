@@ -44,7 +44,7 @@ const store = createStore({
 		async login({ commit }, credentials) {
 			try {
 				const response = await axios.post('/auth/login-for-mom', credentials);
-				commit('setUser', response.data.user);
+				commit('setUser', response.data);
 				return response.data;
 			} catch (error) {
 				if (error.response && error.response.status === 401) {
