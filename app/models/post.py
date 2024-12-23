@@ -3,6 +3,7 @@ from datetime import datetime
 
 class Post(db.Model):
     __tablename__ = 'posts'
+    
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 

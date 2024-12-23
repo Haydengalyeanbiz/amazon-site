@@ -66,7 +66,7 @@ const store = createStore({
 		// ! GET ALL POSTS
 		async fetchPosts({ commit }) {
 			try {
-				const response = await axios.get('/all-posts');
+				const response = await axios.get('/posts/all-posts');
 				commit('setPosts', response.data);
 			} catch (error) {
 				console.error('Failed to fetch posts:', error);
@@ -75,13 +75,19 @@ const store = createStore({
 
 		// ! SUBMIT NEW POST
 		async submitPost({ state }, postData) {
+			console.log('isAuthenticated:', state.isAuthenticated);
 			if (!state.isAuthenticated) {
 				throw new Error('User is not authenticated');
 			}
-
 			try {
-				const response = await axios.post('/submit-post', postData, {
-					withCredentials: true,
+				const csrfToken = document.cookie
+					.split('; ')
+					.find((row) => row.startsWith('csrf_token='))
+					?.split('=')[1]; // Extract CSRF token from cookies
+
+				const response = await axios.post('/posts/submit-post', {
+					...postData,
+					csrf_token: csrfToken,
 				});
 				return response.data;
 			} catch (error) {
@@ -91,10 +97,9 @@ const store = createStore({
 		},
 		// ! FETCH A SINGLE POST
 		async fetchSinglePost(_, postId) {
-			// Replace `commit` with `_`
 			try {
-				const response = await axios.get(`/api/posts/${postId}`);
-				return response.data; // Return the post data
+				const response = await axios.get(`/posts/posts/${postId}`);
+				return response.data;
 			} catch (error) {
 				console.error('Failed to fetch single post:', error);
 				throw error;
@@ -104,7 +109,7 @@ const store = createStore({
 		async updatePost(_, updatedPost) {
 			try {
 				const response = await axios.put(
-					`/api/posts/${updatedPost.id}`,
+					`/posts/${updatedPost.id}`,
 					updatedPost
 				);
 				console.log('Post updated successfully:', response.data);

@@ -170,6 +170,7 @@ export default {
 				throw new Error('User is not authenticated');
 			}
 			try {
+				console.log('This is the payload', postData);
 				const response = await axios.post('/api/submit-post', postData);
 				return response.data;
 			} catch (error) {
@@ -180,11 +181,11 @@ export default {
 		async submitForm() {
 			try {
 				await this.$store.dispatch('submitPost', {
-					title: this.postForm.title,
-					price: this.postForm.price,
-					description: this.postForm.description,
-					image_url: this.postForm.imageUrl,
-					link_url: this.affiliateLink,
+					title: this.postForm.title || '', // Default to empty strings if undefined
+					price: this.postForm.price || '',
+					description: this.postForm.description || '',
+					image_url: this.postForm.imageUrl || '',
+					link_url: this.affiliateLink || '',
 				});
 				this.$router.push('/');
 			} catch (error) {
