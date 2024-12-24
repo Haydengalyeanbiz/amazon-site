@@ -11,7 +11,7 @@ class Post(db.Model):
     title = db.Column(db.String(250), nullable=False)
     price = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
-    image_url = db.Column(db.String(300), nullable=False)
+    image_url = db.Column(db.String(1200), nullable=False)
     link_url = db.Column(db.String(1000), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     created_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
