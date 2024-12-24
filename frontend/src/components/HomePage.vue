@@ -126,6 +126,7 @@ export default {
 	justify-content: center;
 	margin: 0 auto;
 	gap: 2rem;
+	height: 80vh;
 }
 
 .post-card {
