@@ -56,23 +56,14 @@ export default {
 	methods: {
 		...mapActions(['login']), // Keep Vuex action as login
 		async handleLogin() {
-			// Renamed the method to handleLogin
-			console.log('Login button clicked');
 			this.loading = true;
 
 			try {
 				this.error = null;
-
 				const credentials = { email: this.email, password: this.password };
-				console.log('Credentials:', credentials);
-
 				await this.login(credentials);
-				console.log('Login successful');
-				console.log('Vuex state after login:', this.$store.state);
-
 				this.$router.push('/');
 			} catch (error) {
-				console.error('Login failed:', error);
 				this.error = error.message;
 			} finally {
 				this.loading = false;

@@ -8,6 +8,9 @@ from .models import db, User
 from .config import Config
 from .seeders import seed_commands
 
+origins = ["http://localhost:5173"]
+if os.getenv("FLASK_ENV") == "production":
+    origins.append("https://www.indymamadeals.com")
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
 login = LoginManager(app)
@@ -31,7 +34,8 @@ app.register_blueprint(amazon_routes, url_prefix='/api/amazon')
 
 db.init_app(app)
 Migrate(app, db)
-CORS(app)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": origins}})
+
 
 @app.before_request
 def https_redirect():
@@ -56,9 +60,6 @@ def inject_csrf_token(response):
 
 @app.route("/api/docs")
 def api_help():
-    """
-    Returns all API routes and their doc strings
-    """
     acceptable_methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
     route_list = { rule.rule: [[ method for method in rule.methods if method in acceptable_methods ],
                     app.view_functions[rule.endpoint].__doc__ ]
@@ -69,11 +70,6 @@ def api_help():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def react_root(path):
-    """
-    This route will direct to the public directory in our
-    react builds in the production environment for favicon
-    or index.html requests
-    """
     if path == 'favicon.ico':
         return app.send_from_directory('public', 'favicon.ico')
     return app.send_static_file('index.html')
