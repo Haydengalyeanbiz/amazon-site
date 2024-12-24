@@ -2,7 +2,7 @@ import { createStore } from 'vuex';
 import axios from 'axios';
 
 axios.defaults.baseURL =
-	process.env.NODE_ENV === 'production'
+	import.meta.env.MODE === 'production'
 		? 'https://www.indymamadeals.com/api'
 		: '/api';
 axios.defaults.withCredentials = true;
