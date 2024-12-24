@@ -14,7 +14,7 @@ def get_posts():
     return jsonify(result), 200
 
 #*--------------------------Get A Single Post------------------------
-@post_routes.route('/api/posts/<int:post_id>', methods=['GET'])
+@post_routes.route('/<int:post_id>', methods=['GET'])
 def get_single_post(post_id):
     post = Post.query.get(post_id)
     if not post:
@@ -58,7 +58,7 @@ def submit_post():
     return jsonify({'message': 'Post created successfully'}), 201
 
 #*------------------------Update a Post----------------------------
-@post_routes.route('/api/posts/<int:post_id>', methods=['PUT'])
+@post_routes.route('/<int:post_id>', methods=['PUT'])
 def update_post(post_id):
     data = request.json  
 
@@ -96,7 +96,7 @@ def update_post(post_id):
         return jsonify({'error': 'Failed to update post', 'details': str(e)}), 500
     
 #*------------------------Delete a Post----------------------------
-@post_routes.route('/posts/<int:post_id>', methods=['DELETE'])
+@post_routes.route('/<int:post_id>', methods=['DELETE'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get(post_id)

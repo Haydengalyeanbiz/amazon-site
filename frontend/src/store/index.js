@@ -101,7 +101,7 @@ const store = createStore({
 		// ! FETCH A SINGLE POST
 		async fetchSinglePost(_, postId) {
 			try {
-				const response = await axios.get(`/posts/posts/${postId}`);
+				const response = await axios.get(`/posts/${postId}`);
 				return response.data;
 			} catch (error) {
 				console.error('Failed to fetch single post:', error);

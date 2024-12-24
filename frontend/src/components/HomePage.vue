@@ -24,7 +24,7 @@
 							Visit Product
 						</button>
 						<div
-							v-if="isAuthenticated && post.author_id === user.id"
+							v-if="isAuthenticated"
 							class="user-controls"
 						>
 							<button
