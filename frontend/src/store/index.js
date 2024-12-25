@@ -27,8 +27,19 @@ const store = createStore({
 		};
 	},
 	mutations: {
-		setPosts(state, posts) {
+		setPosts(state, { posts, current_page, total_pages, has_prev, has_next }) {
+			console.log('setPosts mutation received:', {
+				posts,
+				current_page,
+				total_pages,
+				has_prev,
+				has_next,
+			});
 			state.posts = posts;
+			state.currentPage = current_page;
+			state.totalPages = total_pages;
+			state.hasPrevPage = has_prev;
+			state.hasNextPage = has_next;
 		},
 		setUser(state, user) {
 			state.user = user;
@@ -60,17 +71,30 @@ const store = createStore({
 		// ! USER LOGOUT
 		async logout({ commit }) {
 			try {
-				await axios.post('/logout');
+				const csrfToken = document.cookie
+					.split('; ')
+					.find((row) => row.startsWith('csrf_token='))
+					?.split('=')[1];
+				await axios.post('/auth/logout', { csrf_token: csrfToken });
 				commit('logout');
 			} catch (error) {
 				console.error('Failed to log out:', error);
 			}
 		},
 		// ! GET ALL POSTS
-		async fetchPosts({ commit }) {
+		async fetchPosts({ commit }, { page = 1, perPage = 12 } = {}) {
 			try {
-				const response = await axios.get('/posts/all-posts');
-				commit('setPosts', response.data);
+				const response = await axios.get('/posts/all-posts', {
+					params: { page, per_page: perPage },
+				});
+				console.log('fetchPosts response:', response.data);
+				commit('setPosts', {
+					posts: response.data.posts,
+					current_page: response.data.current_page,
+					total_pages: response.data.total_pages,
+					has_prev: response.data.has_prev,
+					has_next: response.data.has_next,
+				});
 			} catch (error) {
 				console.error('Failed to fetch posts:', error);
 			}

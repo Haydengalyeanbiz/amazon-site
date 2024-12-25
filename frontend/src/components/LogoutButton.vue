@@ -2,7 +2,7 @@
 	<div>
 		<button
 			v-if="isAuthenticated"
-			@click="logout"
+			@click="handleLogout"
 		>
 			Logout
 		</button>
@@ -17,7 +17,14 @@ export default {
 		...mapState(['isAuthenticated']), // Access the Vuex state to check if the user is authenticated
 	},
 	methods: {
-		...mapActions(['logout']), // Map Vuex logout action to this component
+		...mapActions(['logout']),
+		async handleLogout() {
+			try {
+				await this.logout();
+			} catch (error) {
+				console.error('Logout failed:', error);
+			}
+		}, // Map Vuex logout action to this component
 	},
 };
 </script>

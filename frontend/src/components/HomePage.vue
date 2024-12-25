@@ -4,7 +4,7 @@
 			<div
 				class="post-card"
 				v-for="post in posts"
-				:key="post.title"
+				:key="post.id"
 			>
 				<div class="post-img-title">
 					<img
@@ -24,7 +24,7 @@
 							Visit Product
 						</button>
 						<div
-							v-if="isAuthenticated"
+							v-if="isAuthenticated && post.user_id === user.id"
 							class="user-controls"
 						>
 							<button
@@ -44,6 +44,27 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Pagination Controls -->
+		<div class="pagination-controls">
+			<button
+				:disabled="!hasPrevPage"
+				@click="loadPage(currentPage - 1)"
+				class="pagination-btn"
+			>
+				Previous
+			</button>
+			<span>Page {{ currentPage }} of {{ totalPages }}</span>
+			<button
+				:disabled="!hasNextPage"
+				@click="loadPage(currentPage + 1)"
+				class="pagination-btn"
+			>
+				Next
+			</button>
+		</div>
+
+		<!-- Delete Modal -->
 		<div
 			v-if="showDeleteModal"
 			class="modal-overlay"
@@ -79,7 +100,15 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(['posts', 'user', 'isAuthenticated']),
+		...mapState([
+			'posts',
+			'currentPage',
+			'totalPages',
+			'hasPrevPage',
+			'hasNextPage',
+			'user',
+			'isAuthenticated',
+		]),
 	},
 	methods: {
 		...mapActions(['fetchPosts', 'deletePost']),
@@ -91,8 +120,8 @@ export default {
 			this.$router.push({ name: 'EditProductPage', params: { id: postId } });
 		},
 		openDeleteModal(postId) {
-			this.selectedPostId = postId; // Store the selected post ID
-			this.showDeleteModal = true; // Open the modal
+			this.selectedPostId = postId;
+			this.showDeleteModal = true;
 		},
 		async confirmDelete() {
 			try {
@@ -103,9 +132,20 @@ export default {
 				console.error('Failed to delete post:', error);
 			}
 		},
+		async loadPage(page) {
+			try {
+				// Call the fetchPosts action to fetch data and update the state
+				await this.fetchPosts({
+					page,
+					perPage: 12,
+				});
+			} catch (error) {
+				console.error('Error loading page:', error);
+			}
+		},
 	},
 	created() {
-		this.fetchPosts();
+		this.fetchPosts({ page: this.currentPage || 1, perPage: 12 });
 	},
 };
 </script>
@@ -126,7 +166,7 @@ export default {
 	justify-content: center;
 	margin: 0 auto;
 	gap: 2rem;
-	height: 80vh;
+	height: auto;
 }
 
 .post-card {
@@ -134,7 +174,6 @@ export default {
 	flex-direction: column;
 	justify-content: space-between;
 	border-radius: 8px;
-	/* padding: 0 1rem 0; */
 	max-width: 360px;
 	text-align: center;
 	background-color: var(--primary-dark);
@@ -190,7 +229,7 @@ export default {
 .visit-link-btn {
 	width: fit-content;
 	padding: 0.5rem;
-	border-radius: 12px;
+	border-radius: 10px;
 	border: none;
 	background-color: var(--primary-light);
 	transition: var(--transition);
@@ -259,5 +298,41 @@ export default {
 	border: none;
 	padding: 0.5rem 1rem;
 	cursor: pointer;
+}
+
+.pagination-controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.pagination-btn {
+	margin: 0 10px;
+	padding: 5px 10px;
+}
+
+/* !TABLETS */
+@media (max-width: 1200px) {
+	.posts-container {
+		grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+		padding: 15px;
+	}
+
+	.post-card {
+		font-size: 16px;
+	}
+}
+
+/* !PHONES */
+@media (max-width: 780px) {
+	.posts-container {
+		grid-template-columns: repeat(1, 1fr); /* 2 items per row */
+		padding: 15px;
+	}
+
+	.post-card {
+		font-size: 16px;
+	}
 }
 </style>

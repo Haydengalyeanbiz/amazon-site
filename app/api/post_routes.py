@@ -9,8 +9,19 @@ post_routes = Blueprint('post', __name__)
 #*--------------------------Get All Posts------------------------
 @post_routes.route('/all-posts', methods=['GET'])
 def get_posts():
-    posts = Post.query.order_by(Post.created_date.desc()).all()
-    result = [post.to_dict() for post in posts]
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 12))
+    posts_query = Post.query.order_by(Post.created_date.desc())
+    pagination = posts_query.paginate(page=page, per_page=per_page, error_out=False)
+
+    posts = [post.to_dict() for post in pagination.items]
+    result = {
+        'posts': posts,
+        'current_page': pagination.page,
+        'total_pages': pagination.pages,
+        'has_prev': pagination.has_prev,
+        'has_next': pagination.has_next,
+    }
     return jsonify(result), 200
 
 #*--------------------------Get A Single Post------------------------
