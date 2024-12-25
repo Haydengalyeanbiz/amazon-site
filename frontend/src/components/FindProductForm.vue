@@ -205,7 +205,7 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	gap: 1rem;
-	height: 120dvh;
+	height: auto;
 	background-color: var(--primary-light);
 }
 
@@ -289,10 +289,22 @@ export default {
 
 .add-post-form textarea {
 	max-width: 500px;
-	min-width: 500px;
+
 	max-height: 150px;
-	min-height: 150px;
 }
 
-/*  */
+@media (max-width: 780px) {
+	.preview-form-structure {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.add-post-form {
+		width: 80%;
+	}
+
+	.add-post-form input {
+		width: 400px;
+	}
+}
 </style>

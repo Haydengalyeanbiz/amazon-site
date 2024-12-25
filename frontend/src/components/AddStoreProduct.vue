@@ -31,6 +31,7 @@
 				<label for="description">Description:</label>
 				<textarea
 					id="description"
+					class="form-description"
 					v-model="formData.description"
 					rows="5"
 					placeholder="Enter description"
@@ -139,8 +140,8 @@ label {
 	color: var(--primary-light);
 }
 
-input,
-textarea {
+.add-post-form input,
+.add-post-form textarea {
 	width: 100%;
 	padding: 0.5rem;
 	border: 1px solid #ccc;
@@ -164,5 +165,15 @@ textarea {
 .error-message {
 	color: red;
 	margin-top: 1rem;
+}
+
+@media (max-width: 780px) {
+	.add-new-post-container {
+		padding: 3rem 0;
+	}
+	.add-post-form {
+		max-width: 80%;
+		width: 100%;
+	}
 }
 </style>
