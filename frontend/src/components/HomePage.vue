@@ -185,6 +185,7 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	gap: 0.5rem;
+	position: relative;
 }
 
 .post-image {
@@ -205,13 +206,15 @@ export default {
 }
 
 .post-title {
-	max-width: 250px;
+	max-width: 360px;
 	font-size: var(--fs-medium);
 	font-weight: var(--fw-bold);
 	background-color: var(--primary-light);
 	border-radius: 12px;
-	border: solid 3px var(--secondary-dark);
+
 	padding: 0.3rem 0.5rem;
+	position: absolute;
+	bottom: 4px;
 }
 
 .post-price,
@@ -231,7 +234,8 @@ export default {
 	padding: 0.5rem;
 	border-radius: 10px;
 	border: none;
-	background-color: var(--primary-light);
+	background-color: var(--primary-dark);
+	color: var(--secondary-light);
 	transition: var(--transition);
 }
 
@@ -308,8 +312,16 @@ export default {
 }
 
 .pagination-btn {
+	border: none;
+	background-color: var(--primary-light);
+	color: var(--primary-dark);
 	margin: 0 10px;
 	padding: 5px 10px;
+	transition: var(--transition);
+}
+
+.pagination-btn:hover {
+	color: var(--secondary-dark);
 }
 
 /* !TABLETS */

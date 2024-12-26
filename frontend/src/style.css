@@ -42,13 +42,14 @@ h1,
 h2,
 h3,
 label,
-button {
+button, 
+a {
     font-family:var(--header-ff);
     margin: 0;
     padding: 0;
 }
 
-a, 
+ 
 p,
 button,
 input,
