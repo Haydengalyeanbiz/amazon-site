@@ -70,6 +70,7 @@ def submit_post():
 
 #*------------------------Update a Post----------------------------
 @post_routes.route('/<int:post_id>', methods=['PUT'])
+@login_required
 def update_post(post_id):
     data = request.json  
 

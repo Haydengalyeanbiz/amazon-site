@@ -134,6 +134,10 @@ export default {
 		},
 		async loadPage(page) {
 			try {
+				window.scrollTo({
+					top: 0,
+					behavior: 'smooth', // This makes the scroll smooth
+				});
 				// Call the fetchPosts action to fetch data and update the state
 				await this.fetchPosts({
 					page,
